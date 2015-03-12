@@ -27,7 +27,7 @@ var PanHandler = function(inputs) {
 	 * @type {number}
 	 * @private
 	 */
-	this._masterRampTime = 0;
+	this._masterRampTime = 1;
 
 	// initialize pans spaced evenly from L to R
 	for (i in this.inputs) {

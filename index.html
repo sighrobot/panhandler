@@ -28,16 +28,21 @@
 
 		#bar2 {
 			left:100px;
-			background:#444;
+			background:#333;
 		}
 
 		#bar3 {
 			left:200px;
-			background:#888;
+			background:#666;
 		}
 
 		#bar4 {
 			left:300px;
+			background:#999;
+		}
+
+		#bar5 {
+			left:400px;
 			background:#bbb;
 		}
 
@@ -102,7 +107,7 @@
 		</tr>
 		<tr>
 			<td style="text-align:center;">0-9</td>
-			<td>Seconds of ramp time</td>
+			<td>Ramp time (<span id="ramp-time">1</span> sec.)</td>
 		</tr>
 		
 	</table>
@@ -113,6 +118,7 @@
 	<div class="bar" id="bar2"></div>
 	<div class="bar" id="bar3"></div>
 	<div class="bar" id="bar4"></div>
+	<div class="bar" id="bar5"></div>
 
 	<script type="text/javascript">
 
@@ -122,16 +128,18 @@
 		var d2 = document.getElementById("bar2");
 		var d3 = document.getElementById("bar3");
 		var d4 = document.getElementById("bar4");
-		var els = [d1, d2, d3, d4];
+		var d5 = document.getElementById("bar5");
+		var els = [d1, d2, d3, d4, d5];
 
  		var s1 = new Tone.FMSynth();
  		var s2 = new Tone.FMSynth();
  		var s3 = new Tone.PluckSynth();
  		var s4 = new Tone.FMSynth();
- 		var inputs = [s1, s2, s3, s4];
+ 		var s5 = new Tone.MonoSynth();
+ 		var inputs = [s1, s2, s3, s4, s5];
 
  		for (i in inputs) {
- 			inputs[i].volume.value = -12;
+ 			inputs[i].volume.value = -16;
  		}
 
  		var ph = new PanHandler(inputs);
@@ -144,6 +152,8 @@
     	s3.triggerAttack("G5");
     	s3.setPreset('Glassy')
     	s4.triggerAttack("C5");
+    	s5.triggerAttack("E5");
+    	s5.setPreset('Pianoetta');
 
     	function draw() {
     		requestAnimationFrame(draw);
@@ -168,6 +178,7 @@
     		}
     		else if (event.keyCode >= 48 && event.keyCode <= 57) {
     			ph.setMasterRampTime(event.keyCode - 48);
+    			document.getElementById('ramp-time').innerHTML = event.keyCode - 48;
     		}
     		else if (event.keyCode == 77) {
     			if (ph.isMuted()) ph.unmuteAll();
